@@ -1,24 +1,24 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
 import './App.css';
+import { Connect } from './Connect'
+import { BuyKey } from './BuyKey'
 
-function App() {
+export const ProviderContext = React.createContext()
+
+const App = () => {
+  const [provider, setProvider] = useState(null)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ProviderContext.Provider value={{setProvider, provider}}>
+      <div className="App">
+        <header className="App-header">
+          {/* Connect button */}
+          {!provider && <Connect />}
+          {/* Once connected, show the purchase button */}
+          {provider && <BuyKey lockAddress="0x2032DfdaE9CFC68BB8Dbe627CF4423f5D4F9536C" />}
+        </header>
+      </div>
+    </ProviderContext.Provider>
   );
 }
 
